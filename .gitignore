@@ -1,0 +1,7 @@
+*.class
+*.pyc
+*.pyo
+.git
+.settings
+.project
+settings.xml
