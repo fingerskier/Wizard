@@ -8,11 +8,10 @@
 <cfelseif tagID lt 0>
 	<cfset thisTag = entityNew("tag")>
 	<cfset thisTag.setModule(thisModule)>
+	<cfset entitySave(thisTag)>
 </cfif>
 
-<cfset example_attr = entityNew("attr")>
-<cfset example_attr.setTag(thisTag)>
-<cfset attrs = entityLoadByExample(example_attr)>
+<cfset attrs = entityload('attr', {tag = thisTag})>
 
 <cfoutput>
 	#thisTag.getName()#
@@ -31,6 +30,8 @@
 			<input type="submit" value="save">
 		</form>
 	</cfloop>
+	<br>
+	Add New:
 	<br>
 	<form action="action/tag.cfc?method=setAttr" method="post">
 		<input name="tagID" type="hidden" value="#tagID#">

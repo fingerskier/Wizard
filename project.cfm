@@ -4,6 +4,7 @@
 	<cfset thisProject = entityLoadByPK("project", projectID)>
 <cfelseif projectID lt 0>
 	<cfset thisProject = entityNew('project')>
+	<cfset entitySave(thisProject)>
 </cfif>
 
 <cfset modules = entityload("module", {project = thisProject})>

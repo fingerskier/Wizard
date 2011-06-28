@@ -39,6 +39,7 @@
 				<cfset attr = entityNew("attr")>
 		 		<cfset attr.setName(arguments.name)>
 				<cfset attr.setValue(arguments.value)>
+				<cfset attr.setTag(tag)>
 			</cfif>
 
 			<cfset entitySave(attr)>
