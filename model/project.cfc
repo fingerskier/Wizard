@@ -4,7 +4,7 @@
 	property name="updated" ormtype="timestamp" setter="false";
 
 	property name="name" default="" ormtype="string";
-	property name="path" ormtype="string";
+	property name="path" default="" ormtype="string";
 
 	private function preUpdate(Struct oldData) {
 		variables.updated = createODBCDateTime(now());

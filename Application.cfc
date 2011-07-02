@@ -19,6 +19,11 @@
  		<cfset application.URL = 'http://' & CGI.HTTP_HOST & '/Wizard'>
 		<cfset application.path = getDirectoryFromPath(getBaseTemplatePath())>
 
+  		<cfset application.action = structNew()>
+		<cfset application.action.module = createObject("component", 'action.module')>
+		<cfset application.action.project = createObject("component", 'action.project')>
+		<cfset application.action.tag = createObject("component", 'action.tag')>
+
 		<cfreturn true>
 	</cffunction>
 
@@ -37,16 +42,25 @@
 
 	</cffunction>
 
-	<cffunction name="onRequest" access="public" returntype="void" output="true">
-		<cfargument name="targetPage" type="string" required="true"/>
-
-		<cfinclude template="#arguments.TargetPage#">
-	</cffunction>
-
 	<cffunction name="onRequestStart" access="public" returnType="boolean" output="false">
 	    <cfargument type="String" name="targetPage" required="true">
 
+		<cfif isDefined('URL.restart') and (URL.restart is 'goober')>
+			<cfset applicationStop()>
+		</cfif>
+
+  		<cfset request.context = structCopy(form)>
+		<cfset structAppend(request.context, URL)>
+
 	    <cfreturn true>
+	</cffunction>
+
+	<cffunction name="onRequest" access="public" returntype="void" output="true">
+		<cfargument name="targetPage" type="string" required="true"/>
+
+		<cfset var context = request.context>
+
+		<cfinclude template="#arguments.TargetPage#">
 	</cffunction>
 
 	<cffunction name="onRequestEnd" access="public" returntype="void" output="true">
@@ -57,7 +71,9 @@
 		<cfargument name="exception" type="any" required="true">
 		<cfargument name="eventName" type="string" required="false" default="">
 
-		<cfdump var="#arguments#">
+		<div style="border: thin solid red;">
+			<cfdump var="#arguments#">
+		</div>
 	</cffunction>
 
 	<cffunction name="onMissingTemplate" access="public" returnType="boolean" output="false">

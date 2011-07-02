@@ -1,9 +1,16 @@
 $(document).ready(function() {
-	$('body').append('<div class="ui-widget"></div>').load('projects.cfm');
+	selectFirstInput();
 	
-	$('.projectLink').live('click', function() {
-		var url = $(this).attr('href');
+	$('.tagLink').live('click', function() {
+		var my = $(this),
+			URL = my.attr('href');
 		
-		$('body').append('<div class="ui-widget"></div>').load(url);
+		my.next('div.tagAttributes').load(URL);
+		
+		return false;
 	});
 });
+
+selectFirstInput = function() {
+	$('form:not(.ui-state-disabled) :input:visible:first').focus();
+}

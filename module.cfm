@@ -1,22 +1,33 @@
-﻿<cfparam name="projectID" min="1" type="numeric">
-<cfparam name="moduleID" type="numeric">
+﻿<cfajaximport tags="CFFORM">
 
-<cfset thisProject = entityLoadByPK("project", projectID)>
+<cfparam name="context.projectID" min="1" type="numeric">
+<cfparam name="context.moduleID" type="numeric">
 
-<cfif moduleID gt 0>
-	<cfset thisModule = entityLoadByPK("module", moduleID)>
-<cfelseif moduleID lt 0>
-	<cfset thisModule = entityNew("module")>
-	<cfset thisModule.setProject(thisProject)>
-	<cfset entitySave(thisModule)>
+<cfif isDefined('context.save')>
+	<cfif context.projectID lt 0>
+		<cfset context.moduleID = application.action.module.insert(argumentCollection=context)>
+ 	<cfelse>
+		<cfset application.action.module.update(argumentCollection=context)>
+	</cfif>
+	<cflocation addtoken="false" url="module.cfm?projectID=#context.projectID#&moduleID=#context.moduleID#">
 </cfif>
 
-<cfset tags = entityLoad("tag", {module = thisModule})>
+<cfset context.project = entityLoadByPK("project", context.projectID)>
+
+<cfif context.moduleID gt 0>
+	<cfset context.module = entityLoadByPK("module", context.moduleID)>
+<cfelseif moduleID lt 0>
+	<cfset context.module = entityNew("module")>
+	<cfset context.module.setProject(context.project)>
+	<cfset entitySave(context.module)>
+</cfif>
+
+<cfset tags = entityLoad("tag", {module = context.module})>
 
 <cfif not arraylen(tags)>
-	<cfset moduleExtension = listLast(thisModule.getName(), '.')>
+	<cfset moduleExtension = listLast(context.module.getName(), '.')>
 	<cfset wrapperTag = entityNew("tag")>
-	<cfset wrapperTag.setModule(thisModule)>
+	<cfset wrapperTag.setModule(context.module)>
 
 	<cfif moduleExtension is 'cfm'>
  		<cfset wrapperTag.setName('html')>
@@ -30,24 +41,26 @@
 	<cfset arrayPrepend(tags, wrapperTag)>
 </cfif>
 
-<cfset moduleName = thisModule.getName()>
+<cfset moduleName = context.module.getName()>
 <cfif not len(moduleName)>
 	<cfset moduleName = 'new_module'>
 </cfif>
 
-<cfoutput>
-	<form action="action/module.cfc?method=upsert" method="post">
-		<input name="projectID" type="hidden" value="#projectID#">
-		<input name="moduleID" type="hidden" value="#moduleID#">
+<cf_page>
+	<cfoutput>
+		<context method="post">
+			<input name="projectID" type="hidden" value="#projectID#">
+			<input name="moduleID" type="hidden" value="#moduleID#">
 
-		<label for="moduleName">Module:</label>
-		<input id="moduleName" name="name" type="text" value="#thisModule.getName()#">
+			<label for="moduleName">Module:</label>
+			<input id="moduleName" name="name" type="text" value="#context.module.getName()#">
+			<br>
+			<input name="save" type="submit" value="Save Changes">
+		</context>
 		<br>
-		<input type="submit" value="Save Changes">
-	</form>
-	<br>
-	<cfloop array="#tags#" index="tag">
- 		<a href="tag.cfm?moduleID=#moduleID#&tagID=#tag.getID()#">#tag.getName()#</a>
-		<br>
-	</cfloop>
-</cfoutput>
+		<cfloop array="#tags#" index="tag">
+			<cfdiv bind="url:tag.cfm?moduleID=#context.moduleID#&tagID=#tag.getID()#" class="tagAttributes" tagname="div" />
+			<br>
+		</cfloop>
+	</cfoutput>
+</cf_page>
