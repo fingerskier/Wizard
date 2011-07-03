@@ -4,10 +4,10 @@
 <cfparam name="context.moduleID" type="numeric">
 
 <cfif isDefined('context.save')>
-	<cfif context.projectID lt 0>
-		<cfset context.moduleID = application.action.module.insert(argumentCollection=context)>
+	<cfif context.moduleID lt 0>
+ 		<cfinvoke component="action.module" method="insert" projectID="#context.projectID#" name="#context.name#" returnvariable="context.moduleID">
  	<cfelse>
-		<cfset application.action.module.update(argumentCollection=context)>
+  		<cfinvoke component="action.module" method="update" projectID="#context.projectID#" moduleID="#context.moduleID#" name="#context.name#">
 	</cfif>
 	<cflocation addtoken="false" url="module.cfm?projectID=#context.projectID#&moduleID=#context.moduleID#">
 </cfif>
@@ -48,19 +48,25 @@
 
 <cf_page>
 	<cfoutput>
-		<context method="post">
-			<input name="projectID" type="hidden" value="#projectID#">
-			<input name="moduleID" type="hidden" value="#moduleID#">
+ 		<iddiv class="ui-widget">
+			<h3 class="ui-widget-header"><a href="#application.URL#">Projects</a>/<a href="#application.URL#project.cfm?projectID=#context.project.getID()#">#context.project.getName()#</a></h3>
+			<div class="ui-widget-content">
+				<form method="post">
+					<input name="projectID" type="hidden" value="#projectID#">
+					<input name="moduleID" type="hidden" value="#moduleID#">
 
-			<label for="moduleName">Module:</label>
-			<input id="moduleName" name="name" type="text" value="#context.module.getName()#">
-			<br>
-			<input name="save" type="submit" value="Save Changes">
-		</context>
-		<br>
-		<cfloop array="#tags#" index="tag">
-			<cfdiv bind="url:tag.cfm?moduleID=#context.moduleID#&tagID=#tag.getID()#" class="tagAttributes" tagname="div" />
-			<br>
-		</cfloop>
+					<label for="moduleName">Module:</label>
+					<input id="moduleName" name="name" type="text" value="#context.module.getName()#">
+					<br>
+					<input name="save" type="submit" value="Save Changes">
+				</form>
+			</div>
+			<div class="ui-widget-content">
+				<cfloop array="#tags#" index="tag">
+					<cfdiv bind="url:tag.cfm?moduleID=#context.moduleID#&tagID=#tag.getID()#" class="tagAttributes" tagname="div" />
+					<br>
+				</cfloop>
+			</div>
+ 		</div>
 	</cfoutput>
 </cf_page>

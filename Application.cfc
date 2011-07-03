@@ -10,13 +10,13 @@
 	<cfset this.ormenabled = true>
 	<cfset this.ormsettings = {
 		cfclocation = "model",
-		dbcreate = "dropcreate",
+		dbcreate = "update",
 		dialect = "Derby",
 		eventHandling = true
 	}>
 
 	<cffunction name="onApplicationStart" access="public" returntype="boolean" output="false">
- 		<cfset application.URL = 'http://' & CGI.HTTP_HOST & '/Wizard'>
+ 		<cfset application.URL = 'http://' & CGI.HTTP_HOST & '/Wizard/'>
 		<cfset application.path = getDirectoryFromPath(getBaseTemplatePath())>
 
   		<cfset application.action = structNew()>

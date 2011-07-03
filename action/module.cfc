@@ -1,6 +1,6 @@
 ﻿<cfcomponent>
 	<cffunction access="remote" name="insert" returntype="Numeric">
-		<cfargument name="moduleID" required="true" type="numeric">
+		<cfargument name="projectID" required="true" type="numeric">
   		<cfargument name="name" required="true" type="string">
 
 		<cfset var result = 0>
@@ -21,16 +21,11 @@
 	</cffunction>
 
 	<cffunction access="remote" name="update" returntype="void">
-		<cfargument name="projectID" required="true" type="numeric">
 		<cfargument name="moduleID" required="true" type="numeric">
   		<cfargument name="name" required="true" type="string">
 
 		<cfif len(arguments.name)>
-
-<cfdump var='#entityLoadByPK("project", arguments.moduleID)#'>
-
-				<cfset var module = entityLoadByPK("project", arguments.moduleID)>
-	  		<cfset var project = entityLoadByPK("project", arguments.projectID)>
+			<cfset var module = entityLoadByPK("module", arguments.moduleID)>
 
    			<cfset module.setName(arguments.name)>
 			<cfset entitySave(module)>

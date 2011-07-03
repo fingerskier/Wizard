@@ -29,28 +29,35 @@
 
 <cf_page>
 	<cfoutput>
-		<h3><a href="#application.URL#">Projects</a></h3>
-		<cfform action="#CGI.SCRIPT_NAME#" method="post">
-			<input name="projectID" type="hidden" value="#context.projectID#">
-			<label for="projectName">Project:</label>
-			<input id="projectName" name="name" type="text" value="#context.project.getName()#">
-			<br>
-			<label for="projectPath">Path:</label>
-			<input id="projectPath" name="path" type="text" value="#context.project.getPath()#">
-			<br>
-			<input name="save" type="submit" value="Save Changes">
-		</cfform>
-		<br>
-		<cfform class="deploy" method="post">
-			<input name="projectID" type="hidden" value="#context.projectID#">
-			<input name="deploy" type="submit" value="Deploy Changes">
-		</cfform>
-		<br>
-		<cfloop array="#modules#" index="module">
-			<a href="module.cfm?projectID=#context.projectID#&moduleID=#module.getID()#">#module.getName()#</a>
-			<br>
-		</cfloop>
-		<br>
-		<a href="module.cfm?projectID=#context.projectID#&moduleID=-7">Add Module</a>
+ 		<div class="ui-widget">
+			<h3 class="ui-widget-header"><a href="#application.URL#">Projects</a></h3>
+			<div class="ui-widget-content">
+				<cfform action="#CGI.SCRIPT_NAME#" method="post">
+					<input name="projectID" type="hidden" value="#context.projectID#">
+					<label for="projectName">Project:</label>
+					<input id="projectName" name="name" type="text" value="#context.project.getName()#">
+					<br>
+					<label for="projectPath">Path:</label>
+					<input id="projectPath" name="path" type="text" value="#context.project.getPath()#">
+					<br>
+					<input name="save" type="submit" value="Save Changes">
+				</cfform>
+				<cfform class="deploy" method="post">
+					<input name="projectID" type="hidden" value="#context.projectID#">
+					<input name="deploy" type="submit" value="Deploy Changes">
+				</cfform>
+				<cfform class="deploy" method="post">
+					<input name="projectID" type="hidden" value="#context.projectID#">
+					<input name="moduleID" type="hidden" value="-7">
+					<input type="submit" value="Add Module">
+				</cfform>
+			</div>
+			<div class="ui-widget-content">
+				<cfloop array="#modules#" index="module">
+					<a href="module.cfm?projectID=#context.projectID#&moduleID=#module.getID()#">#module.getName()#</a>
+					<br>
+				</cfloop>
+			</div>
+ 		</div>
 	</cfoutput>
 </cf_page>
