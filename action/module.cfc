@@ -1,9 +1,14 @@
 ﻿<cfcomponent>
-	<cffunction access="remote" name="insert" returntype="Numeric">
+	<cffunction access="remote" name="delete" returntype="void">
+		<cfargument name="moduleID" required="true" type="numeric">
+
+		<cfset var thisn = entityLoadByPK("module", arguments.moduleID)>
+		<cfset entityDelete(thisn)>
+	</cffunction>
+
+	<cffunction access="remote" name="insert">
 		<cfargument name="projectID" required="true" type="numeric">
   		<cfargument name="name" required="true" type="string">
-
-		<cfset var result = 0>
 
 		<cfif len(arguments.name)>
 			<cfset var module = "">
@@ -14,10 +19,12 @@
 	  		<cfset module.setName(arguments.name)>
 
 			<cfset entitySave(module)>
-   			<cfset result = module.getID()>
-		</cfif>
 
-		<cfreturn result>
+   			<cfset var newbie = entityNew("tag")>
+	  		<cfset newbie.setModule(module)>
+	 		<cfset newbie.setName('component')>
+			<cfset entitySave(newbie)>
+		</cfif>
 	</cffunction>
 
 	<cffunction access="remote" name="update" returntype="void">

@@ -5,12 +5,13 @@
 	<cfset this.applicationTimeout = createTimeSpan(0,1,0,0)>
 	<cfset this.clientStorage = 'database'>
 	<cfset this.debugipaddress = '127.0.0.1'>
+ 	<cfset this.customTagPaths = expandPath('./tags')>
 
 	<cfset this.datasource = 'Wiz'>
 	<cfset this.ormenabled = true>
 	<cfset this.ormsettings = {
 		cfclocation = "model",
-		dbcreate = "update",
+		dbcreate = "dropcreate",
 		dialect = "Derby",
 		eventHandling = true
 	}>
@@ -23,6 +24,9 @@
 		<cfset application.action.module = createObject("component", 'action.module')>
 		<cfset application.action.project = createObject("component", 'action.project')>
 		<cfset application.action.tag = createObject("component", 'action.tag')>
+
+  		<cfset application.errorLog = arrayNew(1)>
+  		<cfset application.debugLog = arrayNew(1)>
 
 		<cfreturn true>
 	</cffunction>
@@ -46,6 +50,7 @@
 	    <cfargument type="String" name="targetPage" required="true">
 
 		<cfif isDefined('URL.restart') and (URL.restart is 'goober')>
+			<cfset ormReload()>
 			<cfset applicationStop()>
 		</cfif>
 
@@ -64,12 +69,18 @@
 	</cffunction>
 
 	<cffunction name="onRequestEnd" access="public" returntype="void" output="true">
-
+ 		<cfif isDefined('context.wizard_action')>
+   			<cfinclude template="#CGI.HTTP_REFERER#">
+		</cfif>
 	</cffunction>
 
 	<cffunction name="onError" access="public" returntype="void" output="true">
 		<cfargument name="exception" type="any" required="true">
 		<cfargument name="eventName" type="string" required="false" default="">
+
+  		<cfparam name="application.errorLog" default="#arrayNew(1)#" type="array">
+
+		<cfset arrayAppend(application.errorLog, arguments)>
 
 		<div style="border: thin solid red;">
 			<cfdump var="#arguments#">

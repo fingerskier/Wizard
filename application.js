@@ -3,9 +3,10 @@ $(document).ready(function() {
 	
 	$('.tagLink').live('click', function() {
 		var my = $(this),
-			URL = my.attr('href');
+			URL = my.attr('href'),
+			containerName = my.attr('container');
 		
-		my.next('div.tagAttributes').load(URL);
+		$(containerName).load(URL);
 		
 		return false;
 	});

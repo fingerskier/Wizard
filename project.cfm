@@ -2,6 +2,12 @@
 <cfparam name="context.name" default="" type="string">
 <cfparam name="context.path" default="" type="string">
 
+<cfif isDefined('context.delete')>
+	<cfparam name="context.moduleID" type="numeric">
+	<cfinvoke component="action.module" method="delete" moduleID="#context.moduleID#">
+	<cflocation addtoken="false" url="#CGI.SCRIPT_NAME#?#CGI.QUERY_STRING#">
+</cfif>
+
 <cfif isDefined('context.save')>
 	<cfif context.projectID lt 0>
    		<cfinvoke component="action.project" method="insert" name="#context.name#" path="#context.path#" returnvariable="context.projectID">
@@ -13,12 +19,13 @@
 	<cfset application.action.project.deploy(argumentCollection=context)>
 </cfif>
 
-<cfif context.projectID gt 0>
-	<cfset context.project = entityLoadByPK("project", context.projectID)>
-<cfelseif context.projectID lt 0>
+<cfif context.projectID lt 0>
 	<cfset context.project = entityNew('project')>
 	<cfset entitySave(context.project)>
+	<cflocation url="project.cfm?projectID=#context.project.getID()#">
 </cfif>
+
+<cfset context.project = entityLoadByPK("project", context.projectID)>
 
 <cfset modules = entityload("module", {project = context.project})>
 
@@ -30,9 +37,9 @@
 <cf_page>
 	<cfoutput>
  		<div class="ui-widget">
-			<h3 class="ui-widget-header"><a href="#application.URL#">Projects</a></h3>
-			<div class="ui-widget-content">
-				<cfform action="#CGI.SCRIPT_NAME#" method="post">
+			<h3 class="ui-corner-all ui-widget-header"><a href="#application.URL#">Projects</a></h3>
+			<div class="ui-corner-top ui-widget-content">
+				<cfform method="post">
 					<input name="projectID" type="hidden" value="#context.projectID#">
 					<label for="projectName">Project:</label>
 					<input id="projectName" name="name" type="text" value="#context.project.getName()#">
@@ -46,15 +53,21 @@
 					<input name="projectID" type="hidden" value="#context.projectID#">
 					<input name="deploy" type="submit" value="Deploy Changes">
 				</cfform>
-				<cfform class="deploy" method="post">
+				<cfform action="module.cfm" class="deploy" method="post">
 					<input name="projectID" type="hidden" value="#context.projectID#">
 					<input name="moduleID" type="hidden" value="-7">
 					<input type="submit" value="Add Module">
 				</cfform>
 			</div>
-			<div class="ui-widget-content">
+			<div class="ui-corner-bottom ui-widget-content">
 				<cfloop array="#modules#" index="module">
-					<a href="module.cfm?projectID=#context.projectID#&moduleID=#module.getID()#">#module.getName()#</a>
+					<cfform method="post">
+	 					<input name="moduleID" type="hidden" value="#module.getID()#">
+						<a href="module.cfm?projectID=#context.projectID#&moduleID=#module.getID()#">#module.getName()#</a>
+						<button class="ui-state-error ui-corner-all" name="delete" type="submit">
+							<span class="ui-icon ui-icon-circle-close"></span>
+						</button>
+					</cfform>
 					<br>
 				</cfloop>
 			</div>
