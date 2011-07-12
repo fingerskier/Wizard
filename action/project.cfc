@@ -15,29 +15,29 @@
 	</cffunction>
 
 	<cffunction access="remote" name="insert" returntype="void">
-  		<cfargument name="name" default="" type="string">
-		<cfargument name="path" default="" type="string">
+  		<cfargument name="projectName" default="" type="string">
+		<cfargument name="projectPath" default="" type="string">
 
   		<cfset var project = "">
 
 		<cfset project = entityNew("project")>
-  		<cfset project.setName(arguments.name)>
- 		<cfset project.setPath(arguments.path)>
+  		<cfset project.setName(arguments.projectName)>
+ 		<cfset project.setPath(arguments.projectPath)>
 
 		<cfset entitySave(project)>
 	</cffunction>
 
 	<cffunction access="remote" name="update" returntype="void">
 		<cfargument name="projectID" required="true" type="numeric">
-  		<cfargument name="name" required="true" type="string">
-		<cfargument name="path" required="true" type="string">
+  		<cfargument name="projectName" required="true" type="string">
+		<cfargument name="projectPath" required="true" type="string">
 
-		<cfif len(arguments.name) and len(arguments.path)>
+		<cfif len(arguments.projectName) and len(arguments.projectName)>
 	  		<cfset var project = "">
 
 			<cfset project = entityLoadByPK("project", arguments.projectID)>
-   			<cfset project.setName(arguments.name)>
-	  		<cfset project.setPath(arguments.path)>
+   			<cfset project.setName(arguments.projectName)>
+	  		<cfset project.setPath(arguments.projectPath)>
 
 			<cfset entitySave(project)>
 		</cfif>

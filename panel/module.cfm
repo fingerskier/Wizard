@@ -1,7 +1,8 @@
 ﻿<cfset thisModule = entityLoadByPK("module", context.ID)>
 
 <cfoutput>
-	<cfform action="action/module.cfc?method=update" method="post">
+	<cfform method="post">
+		<input name="wizard_action" type="hidden" value="action.module|update">
 		<input name="moduleID" type="hidden" value="#thisModule.getID()#">
 		<input name="name" type="text" value="#thisModule.getName()#">
 		<br>

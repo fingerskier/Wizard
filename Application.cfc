@@ -57,6 +57,21 @@
   		<cfset request.context = structCopy(form)>
 		<cfset structAppend(request.context, URL)>
 
+
+  		<cfif isDefined('request.context.name')>
+			<cfset var newWord = entityNew('term')>
+   			<cfset newWord.setText(request.context.name)>
+	  		<cfset entitySave(newWord)>
+		</cfif>
+
+		<cfif isDefined('request.context.wizard_action')>
+  			<cfset var wizard_cfc = listFirst(request.context.wizard_action, '|')>
+  			<cfset var wizard_method = listLast(request.context.wizard_action, '|')>
+	 		<cfset structDelete(request.context, 'wizard_cfc')>
+	 		<cfset structDelete(request.context, 'wizard_method')>
+	 		<cfinvoke component="#wizard_cfc#" method="#wizard_method#" argumentcollection="#request.context#">
+		</cfif>
+
 	    <cfreturn true>
 	</cffunction>
 

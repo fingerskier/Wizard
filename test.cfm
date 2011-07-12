@@ -1,3 +1,6 @@
-﻿<cfinvoke component="tree" method="subNodes" ID="1" returnvariable="result">
+﻿ 		<cfquery dbtype="hql" name="temp">
+ 			select * from term
+			where text like '%fun%'
+ 		</cfquery>
 
-<cfdump var="#result#">
+ 		<cfdump var="#temp#">

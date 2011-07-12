@@ -1,4 +1,4 @@
-﻿<cfajaximport tags="CFFORM">
+﻿<cfajaximport tags="CFFORM,CFINPUT-AUTOSUGGEST">
 
 <cf_page>
 	<table>
