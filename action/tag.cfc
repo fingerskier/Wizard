@@ -52,7 +52,7 @@
 
 		<cfset var thisTag = entityLoadByPK("tag", arguments.tagID)>
 
-		<cfset addTag(moduleID=arguments.moduleID, tagID=arguments.tagID, name=arguments.name, parent=arguments.tagID, lineNum=thisTag.getLineNum()+1, nameAttr=arguments.nameAttr)>
+		<cfset addTag(moduleID=arguments.moduleID, tagID=arguments.tagID, name=arguments.tagName, parent=arguments.tagID, lineNum=thisTag.getLineNum()+1, nameAttr=arguments.nameAttr)>
 	</cffunction>
 
 	<cffunction access="remote" name="addSibling" returntype="void">
@@ -64,7 +64,7 @@
 
 		<cfset var thisTag = entityLoadByPK("tag", arguments.tagID)>
 
-		<cfset addTag(moduleID=arguments.moduleID, tagID=arguments.tagID, name=arguments.name, parent=arguments.parent, lineNum=thisTag.getLineNum()+1, nameAttr=arguments.nameAttr)>
+		<cfset addTag(moduleID=arguments.moduleID, tagID=arguments.tagID, name=arguments.tagName, parent=arguments.parent, lineNum=thisTag.getLineNum()+1, nameAttr=arguments.nameAttr)>
 	</cffunction>
 
 	<cffunction access="remote" name="delete" returntype="void">
