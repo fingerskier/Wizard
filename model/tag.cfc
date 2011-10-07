@@ -1,5 +1,5 @@
 ﻿component persistent="true" {
-	property name="ID" fieldtype="id" generated="always" generator="increment" ormtype="integer" type="numeric";
+	property name="ID" fieldtype="id" generator="native" ormtype="integer" type="numeric";
 
 	property name="module" cfc="module" fieldtype="many-to-one" fkcolumn="moduleID";
 	property name="attrs" cascade="all-delete-orphan" cfc="attr" fieldtype="one-to-many" fkcolumn="tagID" inverse="true" singularname="attr";
