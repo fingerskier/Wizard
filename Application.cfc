@@ -1,7 +1,9 @@
 <cfcomponent extends="framework" output="false">
+<!---
 	<cfset this.clientManagement = true>
 	<cfset this.clientStorage = 'database'>
 	<cfset this.name = "Wizard">
+--->
 	<cfset this.sessionManagement = true>
 	<cfset this.sessionTimeout = createTimeSpan(0,0,30,0)>
 	<cfset this.applicationTimeout = createTimeSpan(0,1,0,0)>
@@ -59,7 +61,7 @@
 
   		<cfset var thisError = structCopy(arguments)>
 		<cfset thisError.detail = structGetValue(arguments, "Detail")>
-  		<cfset thisError.detail = structFindKey(thisError, "Detail")>
+  		<cfset thisError.detail = structGetValue(thisError, "Detail")>
 		<cfset thisError.message = structGetValue(thisError, "Message")>
 		<cfset thisError.resolvedName = structGetValue(thisError, "ResolvedName")>
 		<cfset thisError.type = structGetValue(thisError, "Type")>

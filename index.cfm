@@ -1,4 +1,4 @@
-﻿<cfif isDefined('context.delete')>
+﻿<!---<cfif isDefined('context.delete')>
 	<cfparam name="context.projectID" type="numeric">
 	<cfinvoke component="action.project" method="delete" projectID="#context.projectID#">
 	<cflocation addtoken="false" url="#CGI.SCRIPT_NAME#">
@@ -28,3 +28,4 @@
  		</div>
 	</cfoutput>
 </cf_page>
+--->

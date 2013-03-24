@@ -1,0 +1,24 @@
+<mockup version="1.0" skin="sketch" measuredW="268" measuredH="152" mockupW="236" mockupH="119">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::Label" x="32" y="33" w="-1" h="-1" measuredW="72" measuredH="25" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Tag%20Editor</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Button" x="65" y="67" w="-1" h="-1" measuredW="118" measuredH="28" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>delete%20this%20tag</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::TextInput" x="64" y="120" w="-1" h="-1" measuredW="70" measuredH="29" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>attribute</text>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::TextInput" x="134" y="123" w="134" h="-1" measuredW="106" measuredH="29" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>attribute%20value</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

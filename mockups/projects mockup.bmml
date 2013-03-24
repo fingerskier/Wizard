@@ -1,0 +1,24 @@
+<mockup version="1.0" skin="sketch" measuredW="160" measuredH="204" mockupW="95" mockupH="174">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::Link" x="95" y="85" w="-1" h="-1" measuredW="64" measuredH="25" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Project%201</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Link" x="95" y="134" w="-1" h="-1" measuredW="63" measuredH="25" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Project%202</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::Link" x="97" y="179" w="-1" h="-1" measuredW="63" measuredH="25" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Project%203</text>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::Label" x="65" y="30" w="-1" h="-1" measuredW="80" measuredH="25" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>All%20Projects</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
